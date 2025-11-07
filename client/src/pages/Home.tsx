@@ -211,9 +211,14 @@ export default function Home() {
             </CardContent>
           </Card>
         </div>
-                <div className="mt-6 flex items-center justify-center gap-2 text-xs text-muted-foreground">
-          <Check className="h-3.5 w-3.5" />
-          <span>12 unit tests passed ? Deterministic outputs (seeded by sequence string)</span>
+        
+        <div className="mt-6 flex items-center justify-center gap-3 text-xs text-muted-foreground">
+          <span className="flex items-center gap-1">
+            <Check className="h-3.5 w-3.5" />
+            <span>12 unit tests passed</span>
+          </span>
+          <span className="inline-block h-2 w-2 rounded-full bg-foreground/50" aria-hidden="true" />
+          <span>Deterministic outputs (seeded by sequence string)</span>
         </div>
       </section>
 
