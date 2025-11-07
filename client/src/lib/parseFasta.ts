@@ -17,3 +17,18 @@ export function parseFasta(input: string): string {
   return seq.replace(/[^ACGTUN]/g, "");
 }
 
+/**
+ * Analyze input to determine whether cleaning would modify content.
+ * - hasInvalid = true if non FASTA/non-ACGTUN chars (beyond headers/whitespace) exist
+ * - cleaned = parseFasta(input)
+ */
+export function analyzeFastaInput(input: string): { cleaned: string; hasInvalid: boolean } {
+  const cleaned = parseFasta(input);
+  if (!input) return { cleaned, hasInvalid: false };
+  const lines = input.split(/\r?\n/);
+  const nonHeader = lines.filter((l) => !/^>/.test(l.trim())).join("");
+  const upper = nonHeader.toUpperCase();
+  const noWs = upper.replace(/\s+/g, "");
+  const invalid = /[^ACGTUN]/.test(noWs);
+  return { cleaned, hasInvalid: invalid };
+}

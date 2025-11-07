@@ -1,9 +1,9 @@
-import { findAtgPositions } from "./findAtg";
+﻿import { findAtgPositions } from "./findAtg";
 import type { AtgPrediction, PredictionResult } from "@/shared/types";
 
 export const DEFAULT_THRESHOLD = 0.625;
 
-// Simple deterministic hash for a string → 32-bit unsigned
+// Simple deterministic hash for a string 鈫?32-bit unsigned
 function hash32(s: string): number {
   let h = 2166136261 >>> 0; // FNV-1a basis
   for (let i = 0; i < s.length; i++) {
@@ -26,7 +26,7 @@ function seededRandom(seed: number): () => number {
 }
 
 // Minimal Kozak-like scoring around ATG (deterministic)
-// gccRccATGG — award for purine at -3 and G at +4
+// gccRccATGG 鈥?award for purine at -3 and G at +4
 function kozakScore(seq: string, atgPos0: number): number {
   const s = seq.replace(/U/g, "T");
   const minus3 = atgPos0 - 3 >= 0 ? s[atgPos0 - 3] : "";
@@ -74,7 +74,7 @@ export function predictTIS(seqRaw: string, species: string, opts: PredictOptions
     // Base from deterministic randomness + Kozak bonus, map to [0.5, 1.0]
     const base = rnd();
     const kozak = kozakScore(seqRaw, p0); // 0, 0.5, 1.0
-    let prob = 0.5 + 0.5 * Math.min(1, 0.6 * base + 0.4 * kozak);
+    let prob = 0.5 + 0.5 * Math.min(1, 0.4 * base + 0.6 * kozak);
     // Add a small, explainable species-specific bonus when motif is present
     prob = Math.min(0.99, prob + speciesBonus(p0));
     const peptideLength = 50 + Math.floor(200 * rnd());
@@ -94,3 +94,4 @@ export function predictTIS(seqRaw: string, species: string, opts: PredictOptions
     predictions: limited,
   };
 }
+

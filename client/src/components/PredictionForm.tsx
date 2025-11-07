@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+﻿import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Spinner } from "@/components/ui/spinner";
@@ -14,11 +14,14 @@ interface PredictionFormProps {
   setSelectedSpecies: (s: string) => void;
   loading: boolean;
   error: string | null;
+  canClean?: boolean;
+  onCleanContinue?: () => void;
+  onCancelError?: () => void;
   textareaRef: RefObject<HTMLTextAreaElement>;
   onPredict: () => void;
   examples: { human: string; mouse: string; plant: string };
-  mode: "all" | "top1" | "above";
-  setMode: (m: "all" | "top1" | "above") => void;
+  mode: "all" | "Top-1" | "above";
+  setMode: (m: "all" | "Top-1" | "above") => void;
   threshold: number;
   setThreshold: (t: number) => void;
 }
@@ -30,6 +33,9 @@ export function PredictionForm({
   setSelectedSpecies,
   loading,
   error,
+  canClean,
+  onCleanContinue,
+  onCancelError,
   textareaRef,
   onPredict,
   examples,
@@ -49,6 +55,8 @@ export function PredictionForm({
           <SelectContent>
             <SelectItem value="h_sapiens">Homo sapiens (Human)</SelectItem>
             <SelectItem value="m_musculus">Mus musculus (Mouse)</SelectItem>
+            <SelectItem value="r_norvegicus">Rattus norvegicus (Rat)</SelectItem>
+            <SelectItem value="d_melanogaster">Drosophila melanogaster (Fruit fly)</SelectItem>
             <SelectItem value="d_rerio">Danio rerio (Zebrafish)</SelectItem>
             <SelectItem value="a_thaliana">Arabidopsis thaliana (Plant)</SelectItem>
             <SelectItem value="s_cerevisiae">Saccharomyces cerevisiae (Yeast)</SelectItem>
@@ -69,7 +77,15 @@ export function PredictionForm({
           className="bg-input border-border text-foreground font-mono h-32 focus-visible:ring-ring/60"
         />
         {error && (
-          <p id="sequence-error" className="mt-1 text-sm text-destructive">{error}</p>
+          <div className="mt-1 space-y-2">
+            <p id="sequence-error" className="text-sm text-destructive">{error}</p>
+            {canClean && (
+              <div className="flex gap-2">
+                <Button size="sm" variant="outline" onClick={onCleanContinue}>Clean & Continue</Button>
+                <Button size="sm" variant="ghost" onClick={onCancelError}>Cancel</Button>
+              </div>
+            )}
+          </div>
         )}
       </div>
 
@@ -82,8 +98,8 @@ export function PredictionForm({
               <Label htmlFor="mode-all">All ATGs</Label>
             </div>
             <div className="flex items-center gap-2">
-              <RadioGroupItem id="mode-top1" value="top1" />
-              <Label htmlFor="mode-top1">Top‑1</Label>
+              <RadioGroupItem id="mode-Top-1" value="Top-1" />
+              <Label htmlFor="mode-Top-1">Top-1?</Label>
             </div>
             <div className="flex items-center gap-2">
               <RadioGroupItem id="mode-above" value="above" />
@@ -94,7 +110,7 @@ export function PredictionForm({
         <div>
           <Label className="text-sm text-foreground/90 mb-2 block">Threshold ({threshold.toFixed(3)})</Label>
           <Slider min={0.5} max={0.9} step={0.005} value={[threshold]} onValueChange={(v) => setThreshold(v[0] ?? threshold)} />
-          <p className="text-xs text-muted-foreground mt-1">Default 0.625 • ✓ indicates ≥ threshold</p>
+          <p className="text-xs text-muted-foreground mt-1">Default 0.625 • ✓ indicates &gt;= threshold</p>
         </div>
       </div>
 
@@ -109,7 +125,7 @@ export function PredictionForm({
           Example: Plant
         </Button>
       </div>
-      <p className="text-xs text-muted-foreground">Tip: Human example contains 6 ATGs — handy to compare Top‑1 vs threshold.</p>
+      <p className="text-xs text-muted-foreground">Tip: Human example contains 6 ATGs — handy to compare Top-1 vs threshold.</p>
 
       <Button onClick={onPredict} disabled={loading} className="w-full bg-primary hover:bg-primary/90 active:scale-[0.98] transition">
         {loading ? (
@@ -123,3 +139,5 @@ export function PredictionForm({
     </div>
   );
 }
+
+

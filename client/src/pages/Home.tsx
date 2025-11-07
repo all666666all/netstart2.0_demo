@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dna, Zap, CheckCircle2, XCircle, Github, FileText } from "lucide-react";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
-import { parseFasta } from "@/lib/parseFasta";
+import { parseFasta, analyzeFastaInput } from "@/lib/parseFasta";
 import { predictTIS, DEFAULT_THRESHOLD } from "@/lib/predict";
 import type { PredictionResult } from "@/shared/types";
 import { Navbar } from "@/components/Navbar";
@@ -21,6 +21,8 @@ export default function Home() {
   const [predictionResult, setPredictionResult] = useState<PredictionResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [canClean, setCanClean] = useState(false);
+  const [cleanedCache, setCleanedCache] = useState<string | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [mode, setMode] = useState<"all" | "top1" | "above">("top1");
   const [threshold, setThreshold] = useState<number>(DEFAULT_THRESHOLD);
@@ -31,17 +33,8 @@ export default function Home() {
     plant: "ATGGCCACCATGGCCACCATGGCCACCATGGCCACCATGGCCACCATGGCCACCATGGCCACCATGGCCACCATG"
   };
 
-  const handlePredict = () => {
-    setError(null);
-    setPredictionResult(null);
-    const parsed = parseFasta(sequence);
-    if (!parsed) {
-      setError("Please enter a sequence (FASTA or raw nucleotides)");
-      textareaRef.current?.focus();
-      return;
-    }
+  function runPredict(parsed: string) {
     setLoading(true);
-    // Brief delay for UX polish; then compute deterministically
     setTimeout(() => {
       const topN = mode === "top1" ? 1 : undefined;
       const result = predictTIS(parsed, selectedSpecies, { threshold, topN });
@@ -49,6 +42,33 @@ export default function Home() {
       setLoading(false);
       toast.success("Prediction completed!");
     }, 400);
+  }
+
+  const handlePredict = () => {
+    setError(null);
+    setCanClean(false);
+    setCleanedCache(null);
+    setPredictionResult(null);
+    if (!sequence) {
+      setError("Please enter a sequence (FASTA or raw nucleotides)");
+      textareaRef.current?.focus();
+      return;
+    }
+    const { cleaned, hasInvalid } = analyzeFastaInput(sequence);
+    if (hasInvalid) {
+      setError("Invalid characters detected. Clean & Continue to remove non-ACGTUN and headers, or Cancel.");
+      setCanClean(true);
+      setCleanedCache(cleaned);
+      textareaRef.current?.focus();
+      return;
+    }
+    const parsed = parseFasta(sequence);
+    if (!parsed) {
+      setError("Empty sequence after parsing. Please provide A/C/G/T/U/N bases.");
+      textareaRef.current?.focus();
+      return;
+    }
+    runPredict(parsed);
   };
 
   // Simplified content for assignment landing page
@@ -83,6 +103,9 @@ export default function Home() {
               setSelectedSpecies={setSelectedSpecies}
               loading={loading}
               error={error}
+              canClean={canClean}
+              onCleanContinue={() => { if (cleanedCache) { setSequence(cleanedCache); setError(null); setCanClean(false); runPredict(cleanedCache); } }}
+              onCancelError={() => { textareaRef.current?.focus(); }}
               textareaRef={textareaRef}
               onPredict={handlePredict}
               examples={exampleSequences}
@@ -197,6 +220,9 @@ export default function Home() {
     </div>
   );
 }
+
+
+
 
 
 
