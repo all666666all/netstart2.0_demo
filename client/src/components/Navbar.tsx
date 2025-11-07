@@ -13,7 +13,9 @@ export function Navbar() {
           </div>
         </div>
         <div className="flex items-center gap-4">
-          <a href="#about" className="text-sm text-foreground/90 hover:underline">About</a>
+          <Button variant="outline" size="sm" asChild>
+            <a href="#about">About</a>
+          </Button>
           <Button variant="outline" size="sm" asChild>
             <a
               href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-025-06220-2"
