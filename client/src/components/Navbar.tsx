@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Dna, FileText, Github } from "lucide-react";
+import { Dna, FileText, Github, Info } from "lucide-react";
 
 export function Navbar() {
   return (
@@ -14,7 +14,10 @@ export function Navbar() {
         </div>
         <div className="flex items-center gap-4">
           <Button variant="outline" size="sm" asChild>
-            <a href="#about">About</a>
+            <a href="#about">
+              <Info className="w-4 h-4 mr-2" />
+              About
+            </a>
           </Button>
           <Button variant="outline" size="sm" asChild>
             <a
