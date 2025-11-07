@@ -170,11 +170,12 @@ export default function Home() {
 
       {/* About (minimal to satisfy assignment when slides are absent) */}
       <section id="about" className="container mx-auto px-4 py-16">
-        <h3 className="text-3xl font-bold text-foreground mb-2 text-center">About the Demo</h3>
-        <p className="text-sm md:text-base text-muted-foreground text-center max-w-3xl mx-auto mb-6">
-          This demo summarises our BINF3020 Group Presentation on NetStart 2.0, an open-source bioinformatics tool developed by Nielsen et al. (2025).
-        </p>
-        <div className="grid md:grid-cols-2 gap-6 items-stretch max-w-5xl mx-auto">
+        <div className="backdrop-blur-xl bg-card/70 border border-border rounded-2xl shadow-xl p-6 md:p-8 max-w-6xl mx-auto">
+          <h3 className="text-3xl font-bold text-foreground mb-2 text-center">About the Demo</h3>
+          <p className="text-sm md:text-base text-muted-foreground text-center max-w-3xl mx-auto mb-6">
+            This demo summarises our BINF3020 Group Presentation on NetStart 2.0, an open-source bioinformatics tool developed by Nielsen et al. (2025).
+          </p>
+          <div className="grid md:grid-cols-2 gap-6 items-stretch max-w-5xl mx-auto">
           <Card className="bg-card border-border h-full">
             <CardHeader>
               <CardTitle className="text-foreground">Highlights & Caveats</CardTitle>
@@ -219,16 +220,17 @@ export default function Home() {
               </div>
             </CardContent>
           </Card>
-        </div>
-        
-        <div className="mt-4">
-          <div className="flex flex-wrap items-center justify-center gap-2 text-xs">
-            <span className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-muted/50 px-3 py-1 text-muted-foreground">
-              <Check className="h-3.5 w-3.5" /> 12 unit tests passed
-            </span>
-            <span className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-muted/50 px-3 py-1 text-muted-foreground">
-              Deterministic outputs (seeded by sequence)
-            </span>
+          </div>
+          
+          <div className="mt-4">
+            <div className="flex flex-wrap items-center justify-center gap-2 text-xs">
+              <span className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-muted/50 px-3 py-1 text-muted-foreground">
+                <Check className="h-3.5 w-3.5" /> 12 unit tests passed
+              </span>
+              <span className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-muted/50 px-3 py-1 text-muted-foreground">
+                Deterministic outputs (seeded by sequence)
+              </span>
+            </div>
           </div>
         </div>
       </section>
