@@ -170,7 +170,7 @@ export default function Home() {
 
       {/* About (minimal to satisfy assignment when slides are absent) */}
       <section id="about" className="container mx-auto px-4 py-16">
-        <div className="backdrop-blur-xl bg-card/70 border border-border rounded-2xl shadow-xl p-6 md:p-8 max-w-6xl mx-auto">
+        <div className="backdrop-blur-xl bg-card/40 border border-border/60 rounded-2xl shadow-lg p-6 md:p-8 max-w-6xl mx-auto">
           <h3 className="text-3xl font-bold text-foreground mb-2 text-center">About the Demo</h3>
           <p className="text-sm md:text-base text-muted-foreground text-center max-w-3xl mx-auto mb-6">
             This demo summarises our BINF3020 Group Presentation on NetStart 2.0, an open-source bioinformatics tool developed by Nielsen et al. (2025).
