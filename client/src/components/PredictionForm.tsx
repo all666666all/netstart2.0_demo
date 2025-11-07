@@ -5,6 +5,7 @@ import { Spinner } from "@/components/ui/spinner";
 import type { RefObject } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { User, Mouse, Sprout } from "lucide-react";
 
 interface PredictionFormProps {
   sequence: string;
@@ -48,7 +49,7 @@ export function PredictionForm({
       <div>
         <label className="text-sm text-foreground/90 mb-2 block">Select Species</label>
         <Select value={selectedSpecies} onValueChange={setSelectedSpecies}>
-          <SelectTrigger className="bg-input border-border text-foreground">
+          <SelectTrigger className="bg-input/60 border-border text-foreground">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -73,7 +74,7 @@ export function PredictionForm({
           placeholder="Paste FASTA (with >header) or raw A/C/G/T/U/N..."
           aria-invalid={!!error}
           aria-describedby={error ? "sequence-error" : undefined}
-          className="bg-input border-border text-foreground font-mono h-32 focus-visible:ring-ring/60"
+          className="bg-input/60 border-border text-foreground font-mono h-32 focus-visible:ring-ring/60"
         />
         {error && (
           <div className="mt-1 space-y-2">
@@ -92,9 +93,15 @@ export function PredictionForm({
       <div className="space-y-2">
         <Label className="text-sm text-foreground/90">Examples</Label>
         <div className="flex flex-wrap gap-2">
-          <Button type="button" variant="secondary" size="sm" className="h-7 rounded-full px-3" onClick={() => setSequence(examples.human)}>Human</Button>
-          <Button type="button" variant="secondary" size="sm" className="h-7 rounded-full px-3" onClick={() => setSequence(examples.mouse)}>Mouse</Button>
-          <Button type="button" variant="secondary" size="sm" className="h-7 rounded-full px-3" onClick={() => setSequence(examples.plant)}>Plant</Button>
+          <Button type="button" variant="secondary" size="sm" className="h-7 rounded-full px-3" onClick={() => setSequence(examples.human)}>
+            <User className="w-3.5 h-3.5 mr-1" /> Human
+          </Button>
+          <Button type="button" variant="secondary" size="sm" className="h-7 rounded-full px-3" onClick={() => setSequence(examples.mouse)}>
+            <Mouse className="w-3.5 h-3.5 mr-1" /> Mouse
+          </Button>
+          <Button type="button" variant="secondary" size="sm" className="h-7 rounded-full px-3" onClick={() => setSequence(examples.plant)}>
+            <Sprout className="w-3.5 h-3.5 mr-1" /> Plant
+          </Button>
         </div>
         <p className="text-xs text-muted-foreground">Tip: Human example contains 6 ATGs — handy for comparing Top-1 vs threshold.</p>
       </div>
