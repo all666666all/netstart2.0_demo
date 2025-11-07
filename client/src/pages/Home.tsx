@@ -228,6 +228,10 @@ export default function Home() {
             </span>
           </div>
         </div>
+
+        <p className="mt-3 text-center text-sm text-muted-foreground max-w-3xl mx-auto">
+          This demo summarises our BINF3020 Group Presentation on NetStart 2.0, an open-source bioinformatics tool developed by Nielsen et al. (2025).
+        </p>
       </section>
 
       {/* (FAIR section removed for simplicity) */}
