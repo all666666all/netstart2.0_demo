@@ -19,8 +19,8 @@ interface PredictionFormProps {
   textareaRef: RefObject<HTMLTextAreaElement>;
   onPredict: () => void;
   examples: { human: string; mouse: string; plant: string };
-  mode: "all" | "Top-1" | "above";
-  setMode: (m: "all" | "Top-1" | "above") => void;
+  mode: "all" | "top1" | "above";
+  setMode: (m: "all" | "top1" | "above") => void;
   threshold: number;
   setThreshold: (t: number) => void;
 }
@@ -97,8 +97,8 @@ export function PredictionForm({
               <Label htmlFor="mode-all">All ATGs</Label>
             </div>
             <div className="flex items-center gap-2">
-              <RadioGroupItem id="mode-Top-1" value="Top-1" />
-              <Label htmlFor="mode-Top-1">Top-1?</Label>
+              <RadioGroupItem id="mode-top1" value="top1" />
+              <Label htmlFor="mode-top1">Top-1</Label>
             </div>
             <div className="flex items-center gap-2">
               <RadioGroupItem id="mode-above" value="above" />
@@ -119,7 +119,7 @@ export function PredictionForm({
           Example: Plant
         </Button>
       </div>
-      <p className="text-xs text-muted-foreground">Tip: Human example contains 6 ATGs — handy to compare Top-1 vs threshold.</p>
+      <p className="text-xs text-muted-foreground">Tip: Human example contains 6 ATGs - handy to compare Top-1 vs threshold.</p>
 
       <Button onClick={onPredict} disabled={loading} className="w-full bg-primary hover:bg-primary/90 active:scale-[0.98] transition">
         {loading ? (
@@ -133,6 +133,7 @@ export function PredictionForm({
     </div>
   );
 }
+
 
 
 
