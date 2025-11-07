@@ -77,6 +77,11 @@
   --sidebar-accent-foreground: oklch(0.25 0.01 240);
   --sidebar-border: oklch(0.85 0.01 240);
   --sidebar-ring: oklch(0.55 0.15 230);
+  /* Gradient stops for page background */
+  /* Subtle light→slightly blue-gray, small amplitude */
+  --bg-gradient-start: oklch(0.98 0.004 240);
+  --bg-gradient-mid: oklch(0.965 0.01 238);
+  --bg-gradient-end: oklch(0.91 0.015 235);
 }
 
 /* Dark mode removed by request; site uses light silver theme only */
@@ -88,6 +93,22 @@
   body {
     @apply bg-background text-foreground;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, "Helvetica Neue", Arial, sans-serif;
+    /* Fallback gradient for browsers without OKLCH (subtle, steeper near bottom) */
+    background-image: linear-gradient(
+      to bottom,
+      rgb(247, 248, 252) 0%,
+      rgb(238, 242, 249) 50%,
+      rgb(224, 232, 244) 80%
+    );
+    /* OKLCH gradient: subtle amplitude, steeper near bottom */
+    background-image: linear-gradient(
+      to bottom,
+      var(--bg-gradient-start) 0%,
+      var(--bg-gradient-mid) 50%,
+      var(--bg-gradient-end) 80%
+    );
+    background-repeat: no-repeat;
+    background-attachment: scroll;
   }
   html { scroll-behavior: smooth; }
   button:not(:disabled),
@@ -145,11 +166,58 @@
     }
   }
 
-  /* Subtle grid background for hero, 40px spacing at ~4% opacity */
+  /* Subtle grid overlay for hero, uses pseudo-elements for stability */
   .hero-grid {
+    position: relative;
+    overflow: hidden; /* keep overlays inside */
+    background-color: transparent; /* let page gradient show */
+  }
+
+  /* Grid layer (40px spacing, ~4% line opacity) */
+  .hero-grid::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
     background-image:
-      linear-gradient(to right, color-mix(in oklab, var(--foreground) 4%, transparent) 1px, transparent 1px),
-      linear-gradient(to bottom, color-mix(in oklab, var(--foreground) 4%, transparent) 1px, transparent 1px);
-    background-size: 40px 40px;
+      repeating-linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.04) 0 1px,
+        transparent 1px 40px
+      ),
+      repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.04) 0 1px,
+        transparent 1px 40px
+      );
+  }
+
+  /* Mobile spacing: 30px */
+  @media (max-width: 768px) {
+    .hero-grid::before {
+      background-image:
+        repeating-linear-gradient(
+          to right,
+          rgba(0, 0, 0, 0.04) 0 1px,
+          transparent 1px 30px
+        ),
+        repeating-linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.04) 0 1px,
+          transparent 1px 30px
+        );
+    }
+  }
+
+  /* Bottom fade (60–100px) to avoid clashing with below cards) */
+  .hero-grid::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 90px;
+    pointer-events: none;
+    background: linear-gradient(to bottom, transparent, transparent);
   }
 }

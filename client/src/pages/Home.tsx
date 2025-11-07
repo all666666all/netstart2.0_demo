@@ -87,7 +87,7 @@ export default function Home() {
   const groupAuthors = ["Chengzong Guo", "Dingyi Cao"]; // assignment authors
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       {/* Navigation */}
       <Navbar />
       
@@ -101,7 +101,7 @@ export default function Home() {
       <section id="demo" className="container mx-auto px-4 py-16">
         <Card className="bg-card border-border max-w-4xl mx-auto">
           <CardHeader>
-            <CardTitle className="text-foreground">Simulate Translation Initiation Site Prediction</CardTitle>
+            <CardTitle className="text-foreground text-xl md:text-2xl font-bold">Simulate Translation Initiation Site Prediction</CardTitle>
             <CardDescription className="text-muted-foreground">
               Enter a nucleotide sequence or use an example to see how NetStart 2.0 identifies potential translation start sites
             </CardDescription>
@@ -132,7 +132,9 @@ export default function Home() {
                   predictions:
                     mode === "above"
                       ? predictionResult.predictions.filter((p) => p.probability >= threshold)
-                      : predictionResult.predictions,
+                      : mode === "top1"
+                        ? predictionResult.predictions.slice(0, 1)
+                        : predictionResult.predictions,
                 }}
                 mode={mode}
                 threshold={threshold}
@@ -140,7 +142,13 @@ export default function Home() {
                 originCode={selectedSpecies}
                 onThresholdChange={(t) => setThreshold(t)}
                 onDownload={() => {
-                  const toExport = (mode === "above" ? (predictionResult?.predictions.filter((p) => p.probability >= threshold) ?? []) : (predictionResult?.predictions ?? []));
+                  const toExport = (
+                    mode === "above"
+                      ? (predictionResult?.predictions.filter((p) => p.probability >= threshold) ?? [])
+                      : mode === "top1"
+                        ? (predictionResult?.predictions.slice(0, 1) ?? [])
+                        : (predictionResult?.predictions ?? [])
+                  );
                   const header = "origin,atg_pos,preds,peptide_len";
                   const rows = toExport.map((p) => `${selectedSpecies},${p.position1},${p.probability.toFixed(3)},${p.peptideLength}`).join("\n");
                   const csv = header + "\n" + rows + (rows ? "\n" : "");
@@ -165,8 +173,8 @@ export default function Home() {
       {/* About (minimal to satisfy assignment when slides are absent) */}
       <section id="about" className="container mx-auto px-4 py-16">
         <h3 className="text-3xl font-bold text-foreground mb-6 text-center">About the Demo</h3>
-        <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-          <Card className="bg-card border-border">
+        <div className="grid md:grid-cols-2 gap-6 items-stretch max-w-5xl mx-auto">
+          <Card className="bg-card border-border h-full">
             <CardHeader>
               <CardTitle className="text-foreground">Highlights & Caveats</CardTitle>
 </CardHeader>
@@ -190,7 +198,7 @@ export default function Home() {
             </CardContent>
           </Card>
 
-          <Card className="bg-card border-border">
+          <Card className="bg-card border-border h-full">
             <CardHeader>
               <CardTitle className="text-foreground">FAIR & Licensing</CardTitle>
 </CardHeader>
@@ -212,13 +220,15 @@ export default function Home() {
           </Card>
         </div>
         
-        <div className="mt-6 flex items-center justify-center gap-3 text-xs text-muted-foreground">
-          <span className="flex items-center gap-1">
-            <Check className="h-3.5 w-3.5" />
-            <span>12 unit tests passed</span>
-          </span>
-          <span className="inline-block h-2 w-2 rounded-full bg-foreground/50" aria-hidden="true" />
-          <span>Deterministic outputs (seeded by sequence string)</span>
+        <div className="mt-4">
+          <div className="flex flex-wrap items-center justify-center gap-2 text-xs">
+            <span className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-muted/50 px-3 py-1 text-muted-foreground">
+              <Check className="h-3.5 w-3.5" /> 12 unit tests passed
+            </span>
+            <span className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-muted/50 px-3 py-1 text-muted-foreground">
+              Deterministic outputs (seeded by sequence)
+            </span>
+          </div>
         </div>
       </section>
 

@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+ï»¿import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Spinner } from "@/components/ui/spinner";
@@ -104,7 +104,7 @@ export function PredictionForm({
             <Sprout className="w-3.5 h-3.5 mr-1" /> Plant
           </Button>
         </div>
-        <p className="text-xs text-muted-foreground">Tip: Human example contains 6 ATGs ¡ª handy for comparing Top-1 vs threshold.</p>
+        <p className="text-xs text-muted-foreground">Tip: Human example contains 6 ATGs â€” handy for comparing Top-1 vs threshold.</p>
       </div>
 
       <div className="grid md:grid-cols-2 gap-4">
@@ -139,6 +139,7 @@ export function PredictionForm({
     </div>
   );
 }
+
 
 
 
