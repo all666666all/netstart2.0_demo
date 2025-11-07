@@ -13,6 +13,7 @@ interface PredictionResultsProps {
   originCode: string;
   onThresholdChange: (t: number) => void;
   onDownload?: () => void;
+  disableDownload?: boolean;
 }
 
 function modeLabel(mode: "all" | "top1" | "above") {
@@ -26,7 +27,7 @@ function modeLabel(mode: "all" | "top1" | "above") {
   }
 }
 
-export function PredictionResults({ result, mode, threshold, originLabel, originCode, onThresholdChange, onDownload }: PredictionResultsProps) {
+export function PredictionResults({ result, mode, threshold, originLabel, originCode, onThresholdChange, onDownload, disableDownload }: PredictionResultsProps) {
   return (
     <section aria-labelledby="results-heading" className="space-y-3" aria-live="polite">
       <ResultToolbar
@@ -37,6 +38,7 @@ export function PredictionResults({ result, mode, threshold, originLabel, origin
         onThresholdChange={onThresholdChange}
         onDownload={onDownload}
         hasResults={result.predictions.length > 0}
+        disableDownload={disableDownload}
       />
       <Card className="bg-input border border-border">
         <CardContent className="pt-4">

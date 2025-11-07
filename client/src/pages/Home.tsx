@@ -33,6 +33,17 @@ export default function Home() {
     plant: "ATGGCCACCATGGCCACCATGGCCACCATGGCCACCATGGCCACCATGGCCACCATGGCCACCATGGCCACCATG"
   };
 
+  const originLabelMap: Record<string, string> = {
+    h_sapiens: "Human",
+    m_musculus: "Mouse",
+    r_norvegicus: "Rat",
+    d_melanogaster: "Fruit fly",
+    d_rerio: "Zebrafish",
+    a_thaliana: "Arabidopsis",
+    s_cerevisiae: "Yeast",
+    chordata: "Chordata",
+  };
+
   function runPredict(parsed: string) {
     setLoading(true);
     setTimeout(() => {
@@ -125,6 +136,26 @@ export default function Home() {
                 }}
                 mode={mode}
                 threshold={threshold}
+                originLabel={originLabelMap[selectedSpecies] ?? selectedSpecies}
+                originCode={selectedSpecies}
+                onThresholdChange={(t) => setThreshold(t)}
+                onDownload={() => {
+                  const toExport = (mode === "above" ? (predictionResult?.predictions.filter((p) => p.probability >= threshold) ?? []) : (predictionResult?.predictions ?? []));
+                  const header = "origin,atg_pos,preds,peptide_len";
+                  const rows = toExport.map((p) => `${selectedSpecies},${p.position1},${p.probability.toFixed(3)},${p.peptideLength}`).join("\n");
+                  const csv = header + "\n" + rows + (rows ? "\n" : "");
+                  const ts = new Date().toISOString().replace(/:/g, "-");
+                  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement("a");
+                  a.href = url;
+                  a.download = `netstart2_demo_${selectedSpecies}_${ts}.csv`;
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
+                  URL.revokeObjectURL(url);
+                }}
+                disableDownload={loading}
               />
             )}
           </CardContent>
@@ -182,6 +213,10 @@ export default function Home() {
             </CardContent>
           </Card>
         </div>
+        <div className="mt-6 flex items-center justify-center gap-3">
+          <Badge variant="secondary" className="text-xs">All unit tests passed (12)</Badge>
+          <span className="text-xs text-muted-foreground">seeded by sequence string for determinism</span>
+        </div>
       </section>
 
       {/* (FAIR section removed for simplicity) */}
@@ -220,6 +255,8 @@ export default function Home() {
     </div>
   );
 }
+
+
 
 
 

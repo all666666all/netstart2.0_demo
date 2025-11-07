@@ -12,6 +12,7 @@ interface ResultToolbarProps {
   onThresholdChange: (t: number) => void;
   onDownload?: () => void;
   hasResults: boolean;
+  disableDownload?: boolean;
 }
 
 export function ResultToolbar({
@@ -22,6 +23,7 @@ export function ResultToolbar({
   onThresholdChange,
   onDownload,
   hasResults,
+  disableDownload,
 }: ResultToolbarProps) {
   return (
     <header className="flex items-center justify-between gap-3">
@@ -37,12 +39,12 @@ export function ResultToolbar({
           <span className="tabular-nums text-sm">{threshold.toFixed(3)}</span>
         </div>
         {hasResults && onDownload && (
-          <Button variant="ghost" size="sm" onClick={onDownload} aria-label="Download CSV">
+          <Button variant="ghost" size="sm" onClick={onDownload} aria-label="Download CSV" disabled={!!disableDownload}>
             <Download className="mr-1 h-4 w-4" /> CSV
           </Button>
         )}
       </div>
+      <span className="sr-only" aria-live="polite">Mode {modeLabel}, Threshold {threshold.toFixed(3)}</span>
     </header>
   );
 }
-
