@@ -80,12 +80,23 @@ export function PredictionForm({
             <p id="sequence-error" className="text-sm text-destructive">{error}</p>
             {canClean && (
               <div className="flex gap-2">
-                <Button size="sm" variant="outline" onClick={onCleanContinue}>Clean & Continue</Button>
-                <Button size="sm" variant="ghost" onClick={onCancelError}>Cancel</Button>
+                <Button size="sm" variant="outline" onClick={onCleanContinue} aria-label="Clean and continue with sanitized sequence">Clean & Continue</Button>
+                <Button size="sm" variant="ghost" onClick={onCancelError} aria-label="Cancel and return to input">Cancel</Button>
               </div>
             )}
           </div>
         )}
+      </div>
+
+      {/* Examples toolbar */}
+      <div className="space-y-2">
+        <Label className="text-sm text-foreground/90">Examples</Label>
+        <div className="flex flex-wrap gap-2">
+          <Button type="button" variant="secondary" size="sm" className="h-7 rounded-full px-3" onClick={() => setSequence(examples.human)}>Human</Button>
+          <Button type="button" variant="secondary" size="sm" className="h-7 rounded-full px-3" onClick={() => setSequence(examples.mouse)}>Mouse</Button>
+          <Button type="button" variant="secondary" size="sm" className="h-7 rounded-full px-3" onClick={() => setSequence(examples.plant)}>Plant</Button>
+        </div>
+        <p className="text-xs text-muted-foreground">Tip: Human example contains 6 ATGs — handy for comparing Top-1 vs threshold.</p>
       </div>
 
       <div className="grid md:grid-cols-2 gap-4">
@@ -107,19 +118,6 @@ export function PredictionForm({
           </RadioGroup>
         </div>
       </div>
-
-      <div className="flex gap-2">
-        <Button onClick={() => setSequence(examples.human)} variant="outline" size="sm" className="active:scale-[0.98] transition">
-          Example: Human
-        </Button>
-        <Button onClick={() => setSequence(examples.mouse)} variant="outline" size="sm" className="active:scale-[0.98] transition">
-          Example: Mouse
-        </Button>
-        <Button onClick={() => setSequence(examples.plant)} variant="outline" size="sm" className="active:scale-[0.98] transition">
-          Example: Plant
-        </Button>
-      </div>
-      <p className="text-xs text-muted-foreground">Tip: Human example contains 6 ATGs - handy to compare Top-1 vs threshold.</p>
 
       <Button onClick={onPredict} disabled={loading} className="w-full bg-primary hover:bg-primary/90 active:scale-[0.98] transition">
         {loading ? (
