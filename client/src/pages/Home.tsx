@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Dna, Zap, CheckCircle2, XCircle, Github, FileText } from "lucide-react";
+import { Dna, Zap, CheckCircle2, XCircle, Github, FileText, Check } from "lucide-react";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { parseFasta, analyzeFastaInput } from "@/lib/parseFasta";
@@ -164,28 +164,26 @@ export default function Home() {
 
       {/* About (minimal to satisfy assignment when slides are absent) */}
       <section id="about" className="container mx-auto px-4 py-16">
-        <h3 className="text-3xl font-bold text-foreground mb-6 text-center">About This Project</h3>
+        <h3 className="text-3xl font-bold text-foreground mb-6 text-center">About the Demo</h3>
         <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           <Card className="bg-card border-border">
             <CardHeader>
-              <CardTitle className="text-foreground">Highlights & Limitations</CardTitle>
-              <CardDescription className="text-muted-foreground">Key takeaways for the presentation</CardDescription>
-            </CardHeader>
+              <CardTitle className="text-foreground">Highlights & Caveats</CardTitle>\n            </CardHeader>
             <CardContent className="text-sm text-foreground/90 space-y-2">
               <div>
                 <p className="font-medium">Advantages</p>
                 <ul className="list-disc pl-5 text-muted-foreground">
-                  <li>State-of-the-art accuracy across ~60 eukaryotic species</li>
-                  <li>Protein language model (ESM‑2) + local context</li>
-                  <li>Open web server and public repository</li>
+                  <li>SOTA accuracy across ~60 eukaryotes</li>
+                  <li>ESM‑2 \+ local context</li>
+                  <li>Web server & open repo</li>
                 </ul>
               </div>
               <div>
-                <p className="font-medium">Disadvantages</p>
+                <p className="font-medium">Caveats</p>
                 <ul className="list-disc pl-5 text-muted-foreground">
-                  <li>Heavy compute for local runs; hosted use preferred</li>
-                  <li>Eukaryotes focused; not for prokaryotic genomes</li>
-                  <li>Limited interpretability vs rule-based approaches</li>
+                  <li>Heavy local compute</li>
+                  <li>Eukaryotes only</li>
+                  <li>Limited interpretability</li>
                 </ul>
               </div>
             </CardContent>
@@ -193,17 +191,15 @@ export default function Home() {
 
           <Card className="bg-card border-border">
             <CardHeader>
-              <CardTitle className="text-foreground">FAIR & Licensing</CardTitle>
-              <CardDescription className="text-muted-foreground">Summary for compliance</CardDescription>
-            </CardHeader>
+              <CardTitle className="text-foreground">FAIR & Licensing</CardTitle>\n            </CardHeader>
             <CardContent className="text-sm text-foreground/90 space-y-2">
               <div>
                 <p className="font-medium">FAIR</p>
                 <ul className="list-disc pl-5 text-muted-foreground">
-                  <li>Findable: paper + DOI (BMC Bioinformatics 2025)</li>
-                  <li>Accessible: free web server + open repo</li>
+                  <li>Findable: Paper + DOI (BMC 2025)</li>
+                  <li>Accessible: Free web server & open repo</li>
                   <li>Interoperable: FASTA input, CSV output</li>
-                  <li>Reusable: clear license and documentation</li>
+                  <li>Reusable: Clear license & docs</li>
                 </ul>
               </div>
               <div>
@@ -213,9 +209,9 @@ export default function Home() {
             </CardContent>
           </Card>
         </div>
-        <div className="mt-6 flex items-center justify-center gap-3">
-          <Badge variant="secondary" className="text-xs">All unit tests passed (12)</Badge>
-          <span className="text-xs text-muted-foreground">seeded by sequence string for determinism</span>
+                <div className="mt-6 flex items-center justify-center gap-2 text-xs text-muted-foreground">
+          <Check className="h-3.5 w-3.5" />
+          <span>12 unit tests passed • Deterministic outputs (seeded by sequence string)</span>
         </div>
       </section>
 
@@ -255,6 +251,12 @@ export default function Home() {
     </div>
   );
 }
+
+
+
+
+
+
 
 
 
