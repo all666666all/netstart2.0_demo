@@ -170,7 +170,10 @@ export default function Home() {
 
       {/* About (minimal to satisfy assignment when slides are absent) */}
       <section id="about" className="container mx-auto px-4 py-16">
-        <h3 className="text-3xl font-bold text-foreground mb-6 text-center">About the Demo</h3>
+        <h3 className="text-3xl font-bold text-foreground mb-2 text-center">About the Demo</h3>
+        <p className="text-sm md:text-base text-muted-foreground text-center max-w-3xl mx-auto mb-6">
+          This demo summarises our BINF3020 Group Presentation on NetStart 2.0, an open-source bioinformatics tool developed by Nielsen et al. (2025).
+        </p>
         <div className="grid md:grid-cols-2 gap-6 items-stretch max-w-5xl mx-auto">
           <Card className="bg-card border-border h-full">
             <CardHeader>
@@ -228,10 +231,6 @@ export default function Home() {
             </span>
           </div>
         </div>
-
-        <p className="mt-3 text-center text-sm text-muted-foreground max-w-3xl mx-auto">
-          This demo summarises our BINF3020 Group Presentation on NetStart 2.0, an open-source bioinformatics tool developed by Nielsen et al. (2025).
-        </p>
       </section>
 
       {/* (FAIR section removed for simplicity) */}
