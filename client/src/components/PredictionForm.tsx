@@ -3,6 +3,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { Spinner } from "@/components/ui/spinner";
 import type { RefObject } from "react";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
 
 interface PredictionFormProps {
   sequence: string;
@@ -14,6 +17,10 @@ interface PredictionFormProps {
   textareaRef: RefObject<HTMLTextAreaElement>;
   onPredict: () => void;
   examples: { human: string; mouse: string; plant: string };
+  mode: "all" | "top1" | "above";
+  setMode: (m: "all" | "top1" | "above") => void;
+  threshold: number;
+  setThreshold: (t: number) => void;
 }
 
 export function PredictionForm({
@@ -26,6 +33,10 @@ export function PredictionForm({
   textareaRef,
   onPredict,
   examples,
+  mode,
+  setMode,
+  threshold,
+  setThreshold,
 }: PredictionFormProps) {
   return (
     <div className="space-y-4">
@@ -41,6 +52,7 @@ export function PredictionForm({
             <SelectItem value="d_rerio">Danio rerio (Zebrafish)</SelectItem>
             <SelectItem value="a_thaliana">Arabidopsis thaliana (Plant)</SelectItem>
             <SelectItem value="s_cerevisiae">Saccharomyces cerevisiae (Yeast)</SelectItem>
+            <SelectItem value="chordata">Chordata (Phylum)</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -61,6 +73,31 @@ export function PredictionForm({
         )}
       </div>
 
+      <div className="grid md:grid-cols-2 gap-4">
+        <div>
+          <Label className="text-sm text-foreground/90 mb-2 block">Output Mode</Label>
+          <RadioGroup value={mode} onValueChange={(v) => setMode(v as any)} className="flex gap-4">
+            <div className="flex items-center gap-2">
+              <RadioGroupItem id="mode-all" value="all" />
+              <Label htmlFor="mode-all">All ATGs</Label>
+            </div>
+            <div className="flex items-center gap-2">
+              <RadioGroupItem id="mode-top1" value="top1" />
+              <Label htmlFor="mode-top1">Top‑1</Label>
+            </div>
+            <div className="flex items-center gap-2">
+              <RadioGroupItem id="mode-above" value="above" />
+              <Label htmlFor="mode-above">Above threshold</Label>
+            </div>
+          </RadioGroup>
+        </div>
+        <div>
+          <Label className="text-sm text-foreground/90 mb-2 block">Threshold ({threshold.toFixed(3)})</Label>
+          <Slider min={0.5} max={0.9} step={0.005} value={[threshold]} onValueChange={(v) => setThreshold(v[0] ?? threshold)} />
+          <p className="text-xs text-muted-foreground mt-1">Default 0.625 • ✓ indicates ≥ threshold</p>
+        </div>
+      </div>
+
       <div className="flex gap-2">
         <Button onClick={() => setSequence(examples.human)} variant="outline" size="sm" className="active:scale-[0.98] transition">
           Example: Human
@@ -72,6 +109,7 @@ export function PredictionForm({
           Example: Plant
         </Button>
       </div>
+      <p className="text-xs text-muted-foreground">Tip: Human example contains 6 ATGs — handy to compare Top‑1 vs threshold.</p>
 
       <Button onClick={onPredict} disabled={loading} className="w-full bg-primary hover:bg-primary/90 active:scale-[0.98] transition">
         {loading ? (

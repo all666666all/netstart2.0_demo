@@ -22,6 +22,8 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [mode, setMode] = useState<"all" | "top1" | "above">("top1");
+  const [threshold, setThreshold] = useState<number>(DEFAULT_THRESHOLD);
 
   const exampleSequences = {
     human: "ATGGCTAGCGCCACCATGGCTAGCGCCACCATGGCTAGCGCCACCATGGCTAGCGCCACCATGGCTAGCGCCACCATG",
@@ -41,7 +43,8 @@ export default function Home() {
     setLoading(true);
     // Brief delay for UX polish; then compute deterministically
     setTimeout(() => {
-      const result = predictTIS(parsed, selectedSpecies, { threshold: DEFAULT_THRESHOLD, topN: 3 });
+      const topN = mode === "top1" ? 1 : undefined;
+      const result = predictTIS(parsed, selectedSpecies, { threshold, topN });
       setPredictionResult(result);
       setLoading(false);
       toast.success("Prediction completed!");
@@ -83,8 +86,25 @@ export default function Home() {
               textareaRef={textareaRef}
               onPredict={handlePredict}
               examples={exampleSequences}
+              mode={mode}
+              setMode={setMode}
+              threshold={threshold}
+              setThreshold={setThreshold}
             />
-            {predictionResult && <PredictionResults result={predictionResult} />}
+            {predictionResult && (
+              <>
+                <p className="text-xs text-muted-foreground">Mode: {mode} • Threshold: {threshold.toFixed(3)}</p>
+                <PredictionResults
+                  result={{
+                    ...predictionResult,
+                    predictions:
+                      mode === "above"
+                        ? predictionResult.predictions.filter((p) => p.probability >= threshold)
+                        : predictionResult.predictions,
+                  }}
+                />
+              </>
+            )}
           </CardContent>
         </Card>
       </section>

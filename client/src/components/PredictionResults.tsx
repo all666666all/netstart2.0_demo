@@ -15,6 +15,7 @@ export function PredictionResults({ result }: PredictionResultsProps) {
           <CardTitle className="text-foreground">Prediction Results</CardTitle>
         </CardHeader>
         <CardContent>
+          <p className="text-xs text-muted-foreground mb-3">Position is 1‑based; ✓ means probability ≥ current threshold.</p>
           <div className="space-y-2 text-sm">
             <p className="text-foreground/90">
               <span className="text-muted-foreground">Species:</span> {result.species}
@@ -46,4 +47,3 @@ export function PredictionResults({ result }: PredictionResultsProps) {
     </div>
   );
 }
-

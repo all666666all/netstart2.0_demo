@@ -52,12 +52,31 @@ export function predictTIS(seqRaw: string, species: string, opts: PredictOptions
       ? hash32(species)
       : (hash32(seqRaw) ^ (hash32(species) << 1)) >>> 0;
   const rnd = seededRandom(seed);
+  
+  function speciesBonus(p0: number): number {
+    // Simple motif check: upstream GCCACC (approximate Kozak) at positions [-6..-1]
+    const start = p0 - 6;
+    const hasMotif = start >= 0 && seqRaw.slice(start, start + 6).replace(/U/g, "T") === "GCCACC";
+    if (!hasMotif) return 0;
+    switch (species) {
+      case "h_sapiens":
+        return 0.05;
+      case "m_musculus":
+        return 0.03;
+      case "chordata":
+        return 0.02;
+      default:
+        return 0.02;
+    }
+  }
 
   const predictions: AtgPrediction[] = atgPositions.map((p0) => {
     // Base from deterministic randomness + Kozak bonus, map to [0.5, 1.0]
     const base = rnd();
     const kozak = kozakScore(seqRaw, p0); // 0, 0.5, 1.0
-    const prob = 0.5 + 0.5 * Math.min(1, 0.6 * base + 0.4 * kozak);
+    let prob = 0.5 + 0.5 * Math.min(1, 0.6 * base + 0.4 * kozak);
+    // Add a small, explainable species-specific bonus when motif is present
+    prob = Math.min(0.99, prob + speciesBonus(p0));
     const peptideLength = 50 + Math.floor(200 * rnd());
     return {
       position0: p0,
@@ -75,4 +94,3 @@ export function predictTIS(seqRaw: string, species: string, opts: PredictOptions
     predictions: limited,
   };
 }
-
