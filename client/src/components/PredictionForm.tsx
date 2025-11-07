@@ -5,7 +5,8 @@ import { Spinner } from "@/components/ui/spinner";
 import type { RefObject } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { User, Mouse, Sprout } from "lucide-react";
+import { User, Sprout } from "lucide-react";
+import { RatIcon } from "@/components/icons/Rat";
 
 interface PredictionFormProps {
   sequence: string;
@@ -97,7 +98,7 @@ export function PredictionForm({
             <User className="w-3.5 h-3.5 mr-1" /> Human
           </Button>
           <Button type="button" variant="secondary" size="sm" className="h-7 rounded-full px-3" onClick={() => setSequence(examples.mouse)}>
-            <Mouse className="w-3.5 h-3.5 mr-1" /> Mouse
+            <RatIcon className="w-3.5 h-3.5 mr-1" /> Mouse
           </Button>
           <Button type="button" variant="secondary" size="sm" className="h-7 rounded-full px-3" onClick={() => setSequence(examples.plant)}>
             <Sprout className="w-3.5 h-3.5 mr-1" /> Plant
