@@ -33,7 +33,7 @@ export function PredictionResults({ result, mode, threshold, originLabel, origin
       <ResultToolbar
         originLabel={originLabel}
         originCode={originCode}
-        modeLabel={modeLabel(mode)}
+        mode={mode}
         threshold={threshold}
         onThresholdChange={onThresholdChange}
         onDownload={onDownload}

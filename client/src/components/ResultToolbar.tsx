@@ -7,7 +7,7 @@ import { Download } from "lucide-react";
 interface ResultToolbarProps {
   originLabel: string;
   originCode: string;
-  modeLabel: string;
+  mode: "all" | "top1" | "above";
   threshold: number;
   onThresholdChange: (t: number) => void;
   onDownload?: () => void;
@@ -18,19 +18,20 @@ interface ResultToolbarProps {
 export function ResultToolbar({
   originLabel,
   originCode,
-  modeLabel,
+  mode,
   threshold,
   onThresholdChange,
   onDownload,
   hasResults,
   disableDownload,
 }: ResultToolbarProps) {
+  const modeText = mode === "all" ? "All ATGs" : mode === "top1" ? "Top-1" : "Threshold";
   return (
     <header className="flex items-center justify-between gap-3">
       <div className="flex items-center gap-2">
         <h3 id="results-heading" className="text-base font-semibold">Predictions</h3>
         <Badge variant="secondary" title={originCode}>{originLabel}</Badge>
-        <Badge variant="secondary">{modeLabel}</Badge>
+        <Badge variant="secondary">{modeText}</Badge>
       </div>
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">
@@ -44,7 +45,7 @@ export function ResultToolbar({
           </Button>
         )}
       </div>
-      <span className="sr-only" aria-live="polite">Mode {modeLabel}, Threshold {threshold.toFixed(3)}</span>
+      <span className="sr-only" aria-live="polite">Mode {modeText}, Threshold {threshold.toFixed(3)}</span>
     </header>
   );
 }
