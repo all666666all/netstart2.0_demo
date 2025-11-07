@@ -30,10 +30,11 @@ function modeLabel(mode: "all" | "top1" | "above") {
 export function PredictionResults({ result, mode, threshold, originLabel, originCode, onThresholdChange, onDownload, disableDownload }: PredictionResultsProps) {
   const totalAtg = result.atgCount;
   const visibleCount = result.predictions.length;
+  const aboveCount = result.predictions.filter((p) => p.probability >= threshold).length;
   const showList = visibleCount > 0;
   const detailSuffix = mode === "top1"
     ? (totalAtg > 1 ? ` (displaying ${visibleCount})` : "")
-    : (mode === "above" ? ` (≥ threshold: ${visibleCount})` : "");
+    : (mode === "above" ? ` (≥ threshold: ${aboveCount})` : "");
 
   return (
     <section aria-labelledby="results-heading" className="space-y-2" aria-live="polite">
@@ -49,18 +50,18 @@ export function PredictionResults({ result, mode, threshold, originLabel, origin
       />
       <Card className="bg-input border border-border">
         <CardContent className="pt-2">
-          <div className="text-xs text-muted-foreground leading-tight tabular-nums mb-2" aria-live="polite">
+          <div className="text-xs leading-tight tabular-nums mb-2" aria-live="polite">
             {totalAtg === 0 ? (
-              <p>No ATG found in input.</p>
+              <p className="text-muted-foreground">No ATG found in input.</p>
             ) : (
               <div className="flex flex-col gap-1 sm:flex-row sm:flex-wrap sm:gap-2">
-                <span className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-muted/40 px-2.5 py-1">
-                  <span className="font-semibold text-foreground">Species:</span>
-                  <span className="text-muted-foreground"> {originLabel} ({originCode})</span>
+                <span className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-muted/40 px-2.5 py-1 text-foreground">
+                  <span className="font-semibold">Species:</span>
+                  <span> {originLabel} ({originCode})</span>
                 </span>
-                <span className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-muted/40 px-2.5 py-1">
-                  <span className="font-semibold text-foreground">ATG codons found:</span>
-                  <span className="text-muted-foreground"> {totalAtg}{detailSuffix}</span>
+                <span className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-muted/40 px-2.5 py-1 text-foreground">
+                  <span className="font-semibold">ATG codons found:</span>
+                  <span> {totalAtg}{detailSuffix}</span>
                 </span>
               </div>
             )}
