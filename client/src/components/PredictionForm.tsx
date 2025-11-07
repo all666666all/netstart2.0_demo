@@ -5,7 +5,6 @@ import { Spinner } from "@/components/ui/spinner";
 import type { RefObject } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { Slider } from "@/components/ui/slider";
 
 interface PredictionFormProps {
   sequence: string;
@@ -107,11 +106,6 @@ export function PredictionForm({
             </div>
           </RadioGroup>
         </div>
-        <div>
-          <Label className="text-sm text-foreground/90 mb-2 block">Threshold ({threshold.toFixed(3)})</Label>
-          <Slider min={0.5} max={0.9} step={0.005} value={[threshold]} onValueChange={(v) => setThreshold(v[0] ?? threshold)} />
-          <p className="text-xs text-muted-foreground mt-1">Default 0.625 • ✓ indicates &gt;= threshold</p>
-        </div>
       </div>
 
       <div className="flex gap-2">
@@ -139,5 +133,6 @@ export function PredictionForm({
     </div>
   );
 }
+
 
 

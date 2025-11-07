@@ -1,0 +1,48 @@
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
+import { Download } from "lucide-react";
+
+interface ResultToolbarProps {
+  originLabel: string;
+  originCode: string;
+  modeLabel: string;
+  threshold: number;
+  onThresholdChange: (t: number) => void;
+  onDownload?: () => void;
+  hasResults: boolean;
+}
+
+export function ResultToolbar({
+  originLabel,
+  originCode,
+  modeLabel,
+  threshold,
+  onThresholdChange,
+  onDownload,
+  hasResults,
+}: ResultToolbarProps) {
+  return (
+    <header className="flex items-center justify-between gap-3">
+      <div className="flex items-center gap-2">
+        <h3 id="results-heading" className="text-base font-semibold">Predictions</h3>
+        <Badge variant="secondary" title={originCode}>{originLabel}</Badge>
+        <Badge variant="secondary">{modeLabel}</Badge>
+      </div>
+      <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
+          <Label htmlFor="th" className="text-sm">Threshold</Label>
+          <Slider id="th" className="w-40" min={0.5} max={0.9} step={0.005} value={[threshold]} onValueChange={(v) => onThresholdChange(v[0] ?? threshold)} />
+          <span className="tabular-nums text-sm">{threshold.toFixed(3)}</span>
+        </div>
+        {hasResults && onDownload && (
+          <Button variant="ghost" size="sm" onClick={onDownload} aria-label="Download CSV">
+            <Download className="mr-1 h-4 w-4" /> CSV
+          </Button>
+        )}
+      </div>
+    </header>
+  );
+}
+
