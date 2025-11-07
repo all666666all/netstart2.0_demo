@@ -1,4 +1,4 @@
-﻿import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
@@ -168,13 +168,14 @@ export default function Home() {
         <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           <Card className="bg-card border-border">
             <CardHeader>
-              <CardTitle className="text-foreground">Highlights & Caveats</CardTitle>\n            </CardHeader>
+              <CardTitle className="text-foreground">Highlights & Caveats</CardTitle>
+</CardHeader>
             <CardContent className="text-sm text-foreground/90 space-y-2">
               <div>
                 <p className="font-medium">Advantages</p>
                 <ul className="list-disc pl-5 text-muted-foreground">
                   <li>SOTA accuracy across ~60 eukaryotes</li>
-                  <li>ESM‑2 \+ local context</li>
+                  <li>ESM-2 + local context</li>
                   <li>Web server & open repo</li>
                 </ul>
               </div>
@@ -191,7 +192,8 @@ export default function Home() {
 
           <Card className="bg-card border-border">
             <CardHeader>
-              <CardTitle className="text-foreground">FAIR & Licensing</CardTitle>\n            </CardHeader>
+              <CardTitle className="text-foreground">FAIR & Licensing</CardTitle>
+</CardHeader>
             <CardContent className="text-sm text-foreground/90 space-y-2">
               <div>
                 <p className="font-medium">FAIR</p>
@@ -204,14 +206,14 @@ export default function Home() {
               </div>
               <div>
                 <p className="font-medium">License</p>
-                <p className="text-muted-foreground">Upstream: CC BY‑NC‑ND 4.0 (non‑commercial; no derivatives)</p>
+                <p className="text-muted-foreground">Upstream: CC BY-NC-ND 4.0 (non-commercial; no derivatives)</p>
               </div>
             </CardContent>
           </Card>
         </div>
                 <div className="mt-6 flex items-center justify-center gap-2 text-xs text-muted-foreground">
           <Check className="h-3.5 w-3.5" />
-          <span>12 unit tests passed • Deterministic outputs (seeded by sequence string)</span>
+          <span>12 unit tests passed ? Deterministic outputs (seeded by sequence string)</span>
         </div>
       </section>
 
@@ -251,6 +253,8 @@ export default function Home() {
     </div>
   );
 }
+
+
 
 
 

@@ -144,4 +144,12 @@
       max-width: 1280px; /* Standard content width */
     }
   }
+
+  /* Subtle grid background for hero, 40px spacing at ~4% opacity */
+  .hero-grid {
+    background-image:
+      linear-gradient(to right, color-mix(in oklab, var(--foreground) 4%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in oklab, var(--foreground) 4%, transparent) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
 }

@@ -8,7 +8,7 @@ interface HeroProps {
 
 export function Hero({ authors }: HeroProps) {
   return (
-    <section className="container mx-auto px-4 py-20 text-center">
+    <section className="hero-grid container mx-auto px-4 py-20 text-center">
       <Badge className="mb-4 bg-primary/15 text-primary border-primary/20">BINF3020 Group Presentation</Badge>
       <h2 className="text-5xl font-bold text-foreground mb-3">NetStart 2.0</h2>
       <p className="text-base text-foreground/90 mb-8">Interactive TIS Prediction Demo</p>

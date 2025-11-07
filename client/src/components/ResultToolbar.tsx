@@ -25,7 +25,7 @@ export function ResultToolbar({
   hasResults,
   disableDownload,
 }: ResultToolbarProps) {
-  const modeText = mode === "all" ? "All ATGs" : mode === "top1" ? "Top-1" : "Threshold";
+  const modeText = mode === "all" ? "All ATGs" : mode === "top1" ? "Top-1" : "Above threshold";
   return (
     <header className="flex items-center justify-between gap-3">
       <div className="flex items-center gap-2">
