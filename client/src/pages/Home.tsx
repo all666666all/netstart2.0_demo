@@ -92,18 +92,17 @@ export default function Home() {
               setThreshold={setThreshold}
             />
             {predictionResult && (
-              <>
-                <p className="text-xs text-muted-foreground">Mode: {mode} • Threshold: {threshold.toFixed(3)}</p>
-                <PredictionResults
-                  result={{
-                    ...predictionResult,
-                    predictions:
-                      mode === "above"
-                        ? predictionResult.predictions.filter((p) => p.probability >= threshold)
-                        : predictionResult.predictions,
-                  }}
-                />
-              </>
+              <PredictionResults
+                result={{
+                  ...predictionResult,
+                  predictions:
+                    mode === "above"
+                      ? predictionResult.predictions.filter((p) => p.probability >= threshold)
+                      : predictionResult.predictions,
+                }}
+                mode={mode}
+                threshold={threshold}
+              />
             )}
           </CardContent>
         </Card>
