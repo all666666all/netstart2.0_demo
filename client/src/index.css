@@ -79,41 +79,7 @@
   --sidebar-ring: oklch(0.55 0.15 230);
 }
 
-.dark {
-  /* Night mode - Black Green color scheme */
-  --primary: oklch(0.5 0.15 145); /* Vibrant green for primary actions */
-  --primary-foreground: oklch(0.12 0.02 145); /* Very dark green text */
-  --sidebar-primary: oklch(0.45 0.12 145);
-  --sidebar-primary-foreground: oklch(0.92 0.05 145);
-  --chart-1: oklch(0.55 0.12 145); /* Green */
-  --chart-2: oklch(0.5 0.1 165); /* Teal */
-  --chart-3: oklch(0.6 0.09 130); /* Light green */
-  --chart-4: oklch(0.52 0.08 180); /* Cyan */
-  --chart-5: oklch(0.48 0.11 120); /* Yellow-green */
-  --background: oklch(0.12 0.02 145); /* Very dark green-black */
-  --foreground: oklch(0.92 0.05 145); /* Light green-white text */
-  --card: oklch(0.18 0.025 145); /* Dark green cards */
-  --card-foreground: oklch(0.92 0.05 145);
-  --popover: oklch(0.15 0.025 145); /* Darker green popover */
-  --popover-foreground: oklch(0.92 0.05 145);
-  --secondary: oklch(0.25 0.02 145); /* Dark green-gray */
-  --secondary-foreground: oklch(0.92 0.05 145);
-  --muted: oklch(0.22 0.015 145); /* Muted dark green */
-  --muted-foreground: oklch(0.65 0.04 145); /* Medium green-gray text */
-  --accent: oklch(0.38 0.08 165); /* Teal accent */
-  --accent-foreground: oklch(0.92 0.05 145);
-  --destructive: oklch(0.5 0.18 25); /* Red for destructive */
-  --destructive-foreground: oklch(0.92 0.05 145);
-  --border: oklch(0.28 0.03 145); /* Dark green borders */
-  --input: oklch(0.2 0.025 145); /* Dark input background */
-  --ring: oklch(0.5 0.15 145); /* Green focus ring */
-  --sidebar: oklch(0.18 0.025 145);
-  --sidebar-foreground: oklch(0.92 0.05 145);
-  --sidebar-accent: oklch(0.25 0.02 145);
-  --sidebar-accent-foreground: oklch(0.92 0.05 145);
-  --sidebar-border: oklch(0.28 0.03 145);
-  --sidebar-ring: oklch(0.5 0.15 145);
-}
+/* Dark mode removed by request; site uses light silver theme only */
 
 @layer base {
   * {
