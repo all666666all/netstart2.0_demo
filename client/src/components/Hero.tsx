@@ -11,7 +11,7 @@ export function Hero({ authors }: HeroProps) {
     <section className="container mx-auto px-4 py-20 text-center">
       <Badge className="mb-4 bg-primary/15 text-primary border-primary/20">BINF3020 Group Presentation</Badge>
       <h2 className="text-5xl font-bold text-foreground mb-3">NetStart 2.0</h2>
-      <p className="text-base text-foreground/90 mb-8">Authors: {authors.join(" · ")}</p>
+      <p className="text-base text-foreground/90 mb-8">Interactive TIS Prediction Demo</p>
       <div className="flex gap-4 justify-center">
         <Button size="lg" className="bg-primary hover:bg-primary/90 active:scale-[0.98] transition">
           <a href="#demo">Try Demo</a>
@@ -29,4 +29,3 @@ export function Hero({ authors }: HeroProps) {
     </section>
   );
 }
-

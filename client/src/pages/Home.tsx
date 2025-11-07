@@ -65,7 +65,6 @@ export default function Home() {
 
       {/* Interactive Demo */}
       <section id="demo" className="container mx-auto px-4 py-16">
-        <h3 className="text-3xl font-bold text-foreground mb-8 text-center">Interactive TIS Prediction Demo</h3>
         <Card className="bg-card border-border max-w-4xl mx-auto">
           <CardHeader>
             <CardTitle className="text-foreground">Simulate Translation Initiation Site Prediction</CardTitle>
