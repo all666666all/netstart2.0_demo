@@ -55,10 +55,12 @@ export function PredictionResults({ result, mode, threshold, originLabel, origin
             ) : (
               <div className="flex flex-col gap-1 sm:flex-row sm:flex-wrap sm:gap-2">
                 <span className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-muted/40 px-2.5 py-1">
-                  <span className="font-semibold text-foreground">Species:</span> {originLabel} ({originCode})
+                  <span className="font-semibold text-foreground">Species:</span>
+                  <span className="text-muted-foreground"> {originLabel} ({originCode})</span>
                 </span>
                 <span className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-muted/40 px-2.5 py-1">
-                  <span className="font-semibold text-foreground">ATG codons found:</span> {totalAtg}{detailSuffix}
+                  <span className="font-semibold text-foreground">ATG codons found:</span>
+                  <span className="text-muted-foreground"> {totalAtg}{detailSuffix}</span>
                 </span>
               </div>
             )}

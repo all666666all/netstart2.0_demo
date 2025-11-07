@@ -130,11 +130,9 @@ export default function Home() {
                 result={{
                   ...predictionResult,
                   predictions:
-                    mode === "above"
-                      ? predictionResult.predictions.filter((p) => p.probability >= threshold)
-                      : mode === "top1"
-                        ? predictionResult.predictions.slice(0, 1)
-                        : predictionResult.predictions,
+                    mode === "top1"
+                      ? predictionResult.predictions.slice(0, 1)
+                      : predictionResult.predictions,
                 }}
                 mode={mode}
                 threshold={threshold}
