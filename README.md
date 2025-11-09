@@ -1,60 +1,54 @@
-# NetStart 2.0 — TIS Prediction Demo
+﻿# NetStart 2.0 — TIS Prediction Demo
 
-一个用于演示 NetStart 2.0（翻译起始位点预测）的交互式前端 Demo，配合 BINF3020 小组展示使用。
+An interactive front-end demo of NetStart 2.0 (Translation Initiation Site prediction), created for the BINF3020 group presentation.
 
-- 在线地址（稳定别名）：
-  - https://netstart2-0-demo.vercel.app
-- 近期部署（可能包含随机后缀，仅作参考）：
-  - https://netstart2-0-demo-git-main-all666666all1s-projects.vercel.app
+- Live demo: https://netstart.me
 
-## 功能特点
-- 交互式预测：粘贴 FASTA 或原始核苷酸序列，选择物种，浏览预测结果
-- 三种输出模式：All ATGs / Top‑1 / ≥ Threshold（阈值可调，展示通过/未通过的对比）
-- 可下载 CSV：导出当前可见结果（与模式一致）
-- 可解释信息：物种、ATG 总数、阈值下可见数，1‑based 位置提示
-- 轻量 UI：Hero 空气感网格、磨砂玻璃 About 卡片、统一 Meta/Legend 视觉
+## Features
+- Interactive prediction: paste FASTA or raw nucleotides, choose species, and view results
+- Output modes: All ATGs / Top‑1 / ≥ Threshold (adjustable threshold; shows check or cross for above/below)
+- CSV export: download the currently visible results (honors the selected mode)
+- Explainability: Species, total ATG count, visible count under threshold/mode, and 1‑based position hint
 
-## 技术栈
-- 构建：Vite + React + TypeScript
-- 样式：Tailwind CSS v4、shadcn/ui 组件
-- 部署：Vercel（静态产物位于 `dist/public`）
+## Tech Stack
+- Build: Vite + React + TypeScript
+- Styling: Tailwind CSS v4, shadcn/ui components
+- Hosting: Vercel (static output in dist/public)
 
-## 本地开发
-- 需要 Node.js 18+（建议 LTS）
-- 推荐使用 pnpm（已在 package.json 中声明 `packageManager`）
+## Local Development
+- Requirements: Node.js 18+ (LTS recommended)
+- Package manager: pnpm (declared in package.json)
 
-```
+`
 pnpm i
-pnpm dev     # 本地启动（Vite，默认 3000）
-```
+pnpm dev     # starts Vite dev server (default port 3000)
+`
 
-## 构建
-```
-pnpm run build  # 产物输出到 dist/public（前端静态）与 dist/index.js（可选服务端入口）
-```
+## Build
+`
+pnpm run build  # outputs to dist/public (frontend static) and dist/index.js (optional server entry)
+`
 
-## 部署（Vercel）
-- 方式 A：直接从静态目录部署（最省心）
-```
+## Deploy (Vercel)
+- Option A: deploy the static output directory
+`
 npx vercel --prod --yes --cwd dist/public
-```
-- 方式 B：预构建 + 预构建部署（避免云端二次安装/构建）
-```
+`
+- Option B: prebuild locally, then deploy the prebuilt output
+`
 npx vercel pull --yes --environment=production
 npx vercel build --prod
 npx vercel deploy --prebuilt --prod --yes
-```
+`
 
-> 说明：本仓库 `vite.config.ts` 的 root 指向 `client/`，构建输出为 `dist/public`，Vercel 会自动识别或可通过 `--cwd dist/public` 明确指定。
+> Note: ite.config.ts sets oot to client/, and outputs static files to dist/public. Vercel will auto-detect this, or you can specify --cwd dist/public explicitly.
 
-## 环境变量
-- `client/index.html` 中包含 `%VITE_*%` 占位符（如 `%VITE_APP_TITLE%`）。若未设置，只会出现构建警告，不影响演示功能。
+## Environment Variables
+- client/index.html contains %VITE_*% placeholders (e.g., %VITE_APP_TITLE%). If not provided, you may see build warnings, but the demo still works.
 
-## 作者 / 致谢
+## Author / Acknowledgements
 - Author: all666666all
-- Contributors: Chengzong Guo, Dingyi Cao
 - Upstream: NetStart 2.0 — Nielsen et al. (2025)
 
-## 许可证
-- MIT（详见 `package.json`）
-
+## License
+- MIT (see package.json)
